@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_press/views/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,13 +11,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
 
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+        ),
+      home: Home(),
+      );
   }
 }
 
