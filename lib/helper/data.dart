@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+
 import 'package:news_press/model/category_model.dart';
 List<CategoryModel> getCategories(){
-  List<CategoryModel> category = List<CategoryModel>();
+  List<CategoryModel> category = <CategoryModel>[];
   CategoryModel  categoryModel;
   //1
   categoryModel = new  CategoryModel();

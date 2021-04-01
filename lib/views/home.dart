@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news_press/helper/data.dart';
+import 'package:news_press/helper/news.dart';
+import 'package:news_press/model/articles.dart';
 import 'package:news_press/model/category_model.dart';
 
 class Home extends StatefulWidget {
@@ -9,13 +11,22 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<CategoryModel> categories = List<CategoryModel>();
+  List<CategoryModel> categories = <CategoryModel>[];
+  List<Article> artciles = <Article>[];
+  bool _loading = true;
+
 
   @override
   void initState() {
     super.initState();
     categories = getCategories();
   }
+  getNews() async{
+    News news = News();
+    await news.getNews();
+    artciles = news.news;
+  }
+
 
   @override
   Widget build(BuildContext context) {

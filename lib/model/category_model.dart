@@ -1,7 +1,7 @@
 
 class CategoryModel{
-  String imageurl ;
-  String categorytitle;
+  late String imageurl ;
+  late String categorytitle;
 
 
 }
