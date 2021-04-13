@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
 import 'dart:convert';
 
@@ -7,12 +8,21 @@ import 'package:news_press/model/articles.dart';
 class News {
 
   List<Article> news  = [];
+  var logger = Logger();
+
+
 
   Future<void> getNews() async{
 
       // String url = https://newsapi.org/v2/everything?q=tesla&from=2021-03-01&sortBy=publishedAt&apiKey=5dff981646814b95a24204ed387bc108;
+    var url = Uri.parse('https://newsapi.org/v2/everything?q=tesla&from=2021-03-01&sortBy=publishedAt&apiKey=5dff981646814b95a24204ed387bc108');
+    // var url =
+    //  Uri.http("newsapi.org", "/v2/everything", { "q" : "tesla" },);
+    var response = await http.get(url);
+    logger.d("Logger is working!");
+    logger.d(url);
+    print(response);
 
-    var response = await http.get(Uri.http('https://newsapi.org/v2/everything?q=tesla&from=2021-03-01&sortBy=publishedAt&apiKey=5dff981646814b95a24204ed387bc108',''));
 
     var jsonData = jsonDecode(response.body);
 
@@ -25,7 +35,6 @@ class News {
             author: element['author'],
             description: element['description'],
             urlToImage: element['urlToImage'],
-            publshedAt: DateTime.parse(element['publishedAt']),
             content: element["content"],
             articleUrl: element["url"],
           );

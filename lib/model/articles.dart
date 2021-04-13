@@ -6,10 +6,9 @@ class Article{
   String author;
   String description;
   String urlToImage;
-  DateTime publshedAt;
   String content;
   String articleUrl;
 
-  Article({required this.title,required this.description,required this.author,required this.content,required this.publshedAt,
+  Article({required this.title,required this.description,required this.author,required this.content,
     required  this.urlToImage, required this.articleUrl});
 }
