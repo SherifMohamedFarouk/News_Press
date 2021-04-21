@@ -7,6 +7,8 @@ import 'package:news_press/helper/news.dart';
 import 'package:news_press/model/articles.dart';
 import 'package:news_press/model/category_model.dart';
 
+import 'arcticle_news.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -15,18 +17,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<CategoryModel> categories = <CategoryModel>[];
   List<Article> artciles = <Article>[];
+  var page =1 ;
   bool _loading = true;
+  ScrollController _sc = new ScrollController();
 
 
   @override
   void initState() {
     super.initState();
     categories = getCategories();
-    getNews();
+    getNews(page);
   }
 
-  getNews() async {
-    News news = News();
+  getNews(int page) async {
+    News news = News(page:page);
     await news.getNews();
     artciles = news.news;
     setState(() {
@@ -78,14 +82,18 @@ class _HomeState extends State<Home> {
               Container(
                 // MediaQuery.of(context).size.height-MediaQuery.of(context).padding.top-MediaQuery.of(context).padding.bottom
                 height: 500,
-                child: ListView.builder(itemCount: artciles.length,
+                child: ListView.builder(
+                  itemCount: artciles.length,
                   shrinkWrap: true,
                   physics: ClampingScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
+                    if (index == artciles.length) {
+                      getNews(page++);
+                    }
                     return BlogTile(
                         artciles[index].urlToImage, artciles[index].title,
-                        artciles[index].description);
+                        artciles[index].description,artciles[index].articleUrl);
                   },
                 ),
               )
@@ -146,29 +154,39 @@ class BlogTile extends StatelessWidget {
   String imageUrl;
   String blogTitle;
   String blogDesc;
+  String blogurl;
 
 
-  BlogTile(this.imageUrl, this.blogTitle, this.blogDesc);
+  BlogTile(this.imageUrl, this.blogTitle, this.blogDesc, this.blogurl);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>ArticleNews(blogurl: blogurl,)),);
+      },
+      child: Container(
+        child: Column(
           children: [
-      ClipRRect(
-      child: Image.network(
-      imageUrl
+            ClipRRect(
+              child: Image.network(
+                  imageUrl
+              ),
+              borderRadius: BorderRadius.circular(6.0),
+            ),
+            Padding(padding: EdgeInsets.only(top: 10.0),
+              child: Text(blogTitle, style: TextStyle(color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0),),),
+            Padding(padding: EdgeInsets.only(top: 5.0),
+                child: Text(blogDesc, style: TextStyle(fontSize: 15.0),))
+            , Divider(
+              color: Colors.black,
+              height: 50,
+            ),
+          ],
+        ),
       ),
-      borderRadius: BorderRadius.circular(6.0),
-    ),
-    Padding(padding: EdgeInsets.only(top: 10.0),child: Text(blogTitle, style: TextStyle(color: Colors.black,fontWeight:FontWeight.bold ,fontSize: 20.0),),),
-    Padding(padding:EdgeInsets.only(top: 5.0),child: Text(blogDesc,style: TextStyle(fontSize: 15.0),))
-    ,Divider(
-    color: Colors.black,
-    height: 50,
-    ),
-    ],
-    ),
     );
   }
 

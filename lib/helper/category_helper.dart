@@ -6,9 +6,9 @@ import 'dart:convert';
 
 import 'package:news_press/model/articles.dart';
 
-class News {
-  var page ;
-  News({required this.page});
+class CategoryHelper {
+  var category ;
+  CategoryHelper({required this.category});
 
   List<Article> news  = [];
   var logger = Logger();
@@ -16,8 +16,8 @@ class News {
 
   Future<void> getNews() async{
 
-      // String url = https://newsapi.org/v2/everything?q=tesla&from=2021-03-01&sortBy=publishedAt&apiKey=5dff981646814b95a24204ed387bc108;
-    var url = Uri.parse('https://newsapi.org/v2/everything?q=tesla&from=$now&page=$page&language=en&sortBy=publishedAt&apiKey=5dff981646814b95a24204ed387bc108');
+    // String url = https://newsapi.org/v2/everything?q=tesla&from=2021-03-01&sortBy=publishedAt&apiKey=5dff981646814b95a24204ed387bc108;
+    var url = Uri.parse('https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=5dff981646814b95a24204ed387bc108');
     // var url =
     //  Uri.http("newsapi.org", "/v2/everything", { "q" : "tesla" },);
     var response = await http.get(url);
