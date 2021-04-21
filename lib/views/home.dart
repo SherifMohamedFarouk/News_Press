@@ -6,6 +6,7 @@ import 'package:news_press/helper/data.dart';
 import 'package:news_press/helper/news.dart';
 import 'package:news_press/model/articles.dart';
 import 'package:news_press/model/category_model.dart';
+import 'package:news_press/views/category_news.dart';
 
 import 'arcticle_news.dart';
 
@@ -113,7 +114,9 @@ class CatgoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) =>CategoryNews(category: CatgTitle) ,));
+      },
       child: Container(
         margin: EdgeInsets.only(right: 5.0, left: 5.0),
         child: Stack(

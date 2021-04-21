@@ -14,8 +14,8 @@ class CategoryHelper {
   var logger = Logger();
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
 
-  Future<void> getNews() async{
-
+  Future<void> getNews(String category) async{
+    category = this.category;
     // String url = https://newsapi.org/v2/everything?q=tesla&from=2021-03-01&sortBy=publishedAt&apiKey=5dff981646814b95a24204ed387bc108;
     var url = Uri.parse('https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=5dff981646814b95a24204ed387bc108');
     // var url =
@@ -32,7 +32,7 @@ class CategoryHelper {
     if(jsonData['status'] == "ok"){
       jsonData["articles"].forEach((element){
 
-        if(element['urlToImage'] != null && element['description'] != null && element['author'] != null){
+        if(element['urlToImage'] != null && element['description'] != null && element['author'] != null && element['title'] != null&& element['url'] != null&& element['content'] != null){
           Article article = Article(
             title: element['title'],
             author: element['author'],
